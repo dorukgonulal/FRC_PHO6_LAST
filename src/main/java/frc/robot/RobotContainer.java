@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -45,7 +46,7 @@ public class RobotContainer {
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driverController.getRawAxis(translationAxis), 
-                () -> -driverController.getRawAxis(strafeAxis), 
+                () -> driverController.getRawAxis(strafeAxis), 
                 () -> -driverController.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean(),
                 () -> slowButton.getAsBoolean()
@@ -64,7 +65,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.setHeading(new Rotation2d(90))));
+        zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.setHeading(new Rotation2d(0))));
     }
 
     /**
