@@ -36,19 +36,19 @@ public class TeleopSwerve extends Command {
     public void execute() {
         /* Get Values, Deadband */
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband) * 0.9;
-        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband) * 0.3;
+        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband) * 0.9;
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband) * 0.35;
 
-        /* Check if boostButton state has changed */
-        if (boostButton.getAsBoolean() && !lastBoostButtonState) {
-            isBoostMode = !isBoostMode;
-        }
+        // /* Check if boostButton state has changed */
+        // if (boostButton.getAsBoolean() && !lastBoostButtonState) {
+        //     isBoostMode = !isBoostMode;
+        // }
 
-        // Update lastBoostButtonState
-        lastBoostButtonState = boostButton.getAsBoolean();
+        // // Update lastBoostButtonState
+        // lastBoostButtonState = boostButton.getAsBoolean();
 
         /* Scale Values based on boost mode */
-        if (isBoostMode) {
+        if (boostButton.getAsBoolean()) {
             translationVal *= 0.4;
             strafeVal *= 0.4;
             rotationVal *= 0.4;
