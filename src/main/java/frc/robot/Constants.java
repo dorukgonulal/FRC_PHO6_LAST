@@ -92,17 +92,17 @@ public final class Constants {
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 1;
             public static final int canCoderID = 9 ;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(154.3-180-10+3);//-113 //67  tamalandı
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(154.3-180-8);//-113 //67  tamalandı
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-        }
+        } 
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 { //done
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 10;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-105.2-10); //132.75 //-47.25 tamamlandı
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-105.2-6); //132.75 //-47.25 tamamlandı
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -113,7 +113,7 @@ public final class Constants {
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 6;
             public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(179.2-180-5);//-39.25 //140.75
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(179.2-180-1);//-39.25 //140.75
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -124,7 +124,7 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 12;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-107.4+180-7);//154.75 //-25.25
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-107.4+180-3);//154.75 //-25.25
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -154,4 +154,48 @@ public final class Constants {
         public static final double k_CONTROLLER_DEADBAND = 0.05;
     
       }
+
+    public static final class ElevatorConstants{
+
+        public static final double ELEVATOR_KP = 0.05; //0.165
+        public static final double ELEVATOR_KI = 0.0005;
+        public static final double ELEVATOR_KD = 0.075;
+    
+        public static final double kEncoderTick2Meter = 0;
+    
+        public static final double ELEVATOR_POWER = 0.65; //.55
+    
+    
+        public static final double ELEVATOR_SETPOINT_INTAKE = 0;
+        public static final double ELEVATOR_SETPOINT_MIDDLE = 0;
+        public static final float ELEVATOR_SETPOINT_SHOOTAMP = 62;
+        public static final double ELEVATOR_TOLERANCE = 0;
+       
+      }
+
+    public static final class IntakeConstants {
+        public static final double AMP_SHOOT_POWER = 0.2; // TODO: this might be tuned specific
+        public static final double SPEAKER_SHOOT_POWER = 0.95; // TODO: this might be tuned specific
+        public static final double TRAP_SHOOT_POWER = 0.77;
+        public static final double INTAKE_ON_POWER = 0.3; // TODO: this might be tuned specific
+        public static final double INTAKE_FEED_POWER = 0.2; // TODO: this might be tuned specific
+      }
+    
+    public static final class PivotConstants {
+        public static final double PIVOT_KP = 0.05;
+        public static final double PIVOT_KI = 0.0002;
+        public static final double PIVOT_KD = 0.0002;
+    
+    
+        public static final double PIVOT_POWER = 0.65;
+    
+        public static final double AMP_SHOOT_SETPOINT = -15.6; // TODO: this might be tuned specific
+        public static final double SPEAKER_SHOOT_SETPOINT = 0; // TODO: this might be tuned specific
+        public static final double INTAKE_ON_SETPOINT = -25.2; // TODO: this might be tuned specific
+        public static final double TRAP_SHOOT_SETPOINT = 0;
+        public static final double INTAKE_CLOSE_SETPOINT = 0; // TODO: this might be tuned specific
+        public static final double PODIUMNOTE_SETPOINT = -5.7; // TODO: this might be tuned specific
+    
+      }    
+    
 }
