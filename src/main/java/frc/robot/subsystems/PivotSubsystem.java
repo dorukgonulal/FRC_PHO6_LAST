@@ -18,7 +18,7 @@ import frc.robot.RobotID;
 public class PivotSubsystem extends SubsystemBase {
 
   double positionZero = 0;
-  private CANSparkMax PivotMotor = new CANSparkMax(RobotID.Pivot.PIVOT_MOTOR_ID, MotorType.kBrushless);
+  private CANSparkMax PivotMotor = new CANSparkMax(Constants.Pivot.PIVOT_MOTOR_ID, MotorType.kBrushless);
   public RelativeEncoder pivotEncoder = PivotMotor.getEncoder(); 
 
   private final PIDController pivotController;

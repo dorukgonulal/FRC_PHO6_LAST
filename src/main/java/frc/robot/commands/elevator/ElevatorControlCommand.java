@@ -48,34 +48,36 @@ public class ElevatorControlCommand extends Command{
   public void execute() {
  
       error = goalPos - elevatorSubsystem.getEncoderPosition();
-
-      if (Math.abs(error) > Constants.ElevatorConstants.ELEVATOR_TOLERANCE) {
-
-        double power = Constants.ElevatorConstants.ELEVATOR_KP * error;
-
-        if (Math.abs(power) > Constants.ElevatorConstants.ELEVATOR_POWER) {
-
-          power = Math.copySign(Constants.ElevatorConstants.ELEVATOR_POWER, power);
-
-        }
-        if (Math.abs(power) < 0.1) {
-
-          power = Math.copySign(0.1, power);
-
-        }
-
-        elevatorSubsystem.setMotors(power);
-
-      } 
       
-      else {
+      if (elevatorSubsystem.getEncoderPosition() < 60){
+        if (Math.abs(error) > Constants.ElevatorConstants.ELEVATOR_TOLERANCE) {
 
+          double power = Constants.ElevatorConstants.ELEVATOR_KP * error;
+  
+          if (Math.abs(power) > Constants.ElevatorConstants.ELEVATOR_POWER) {
+  
+            power = Math.copySign(Constants.ElevatorConstants.ELEVATOR_POWER, power);
+  
+          }
+          if (Math.abs(power) < 0.1) {
+  
+            power = Math.copySign(0.1, power);
+  
+          }
+  
+          elevatorSubsystem.setMotors(power);
+  
+        } else {
+  
+          elevatorSubsystem.stallElevator();
+  
+        }
+      } else {
         elevatorSubsystem.stallElevator();
-
       }
-
+      
       SmartDashboard.putNumber("Elevator Error", error);
-    } 
+    }
 
   // Called once the command ends or is interrupted.
   @Override

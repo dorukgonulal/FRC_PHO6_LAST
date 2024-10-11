@@ -14,12 +14,11 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotID;
 
 public class ElevatorSubsystem extends SubsystemBase {
 
-  private CANSparkMax leftMotor = new CANSparkMax(RobotID.Elevator.ELEVATOR_LEFT_MOTOR, MotorType.kBrushless);
-  private CANSparkMax rightMotor = new CANSparkMax(RobotID.Elevator.ELEVATOR_RIGHT_MOTOR, MotorType.kBrushless);
+  private CANSparkMax leftMotor = new CANSparkMax(Constants.Elevator.ELEVATOR_LEFT_MOTOR, MotorType.kBrushless);
+  private CANSparkMax rightMotor = new CANSparkMax(Constants.Elevator.ELEVATOR_RIGHT_MOTOR, MotorType.kBrushless);
 
   public RelativeEncoder leftEncoder = leftMotor.getEncoder();
   public RelativeEncoder rightEncoder = rightMotor.getEncoder();

@@ -9,12 +9,13 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotID;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  private final CANSparkMax RollerTop = new CANSparkMax(RobotID.Intake.TOP_ROLLER_ID, MotorType.kBrushless); 
-  private final CANSparkMax RollerBottom = new CANSparkMax(RobotID.Intake.BOTTOM_ROLLER_ID, MotorType.kBrushless); 
+  private final CANSparkMax RollerTop = new CANSparkMax(Constants.Intake.TOP_ROLLER_ID, MotorType.kBrushless); 
+  private final CANSparkMax RollerBottom = new CANSparkMax(Constants.Intake.BOTTOM_ROLLER_ID, MotorType.kBrushless); 
 
   public IntakeSubsystem() {
 

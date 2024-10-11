@@ -18,8 +18,8 @@ public class TeleopSwerve extends Command {
     private final BooleanSupplier robotCentricSup;
     private final BooleanSupplier boostButton;
 
-    private boolean isBoostMode = false;
-    private boolean lastBoostButtonState = false;
+    // private boolean isBoostMode = false;
+    // private boolean lastBoostButtonState = false;
 
     public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier boostButton) {
         this.s_Swerve = s_Swerve;

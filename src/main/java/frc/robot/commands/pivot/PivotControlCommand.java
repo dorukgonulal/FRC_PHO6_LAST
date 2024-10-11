@@ -60,41 +60,39 @@ public class PivotControlCommand extends Command {
 
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is schedu led. -26
   @Override
   public void execute() {
  
       error = (goalPos - pivotSubsystem.getEncoderPosition());
 
+      if (pivotSubsystem.getEncoderPosition() > -26) {
+        if (Math.abs(error) > Constants.PivotConstants.PIVOT_KP) {
 
-      if (Math.abs(error) > Constants.PivotConstants.PIVOT_KP) {
-
-        double power = Constants.PivotConstants.PIVOT_KP * error;
-
-        if (Math.abs(power) > PIVOT_POWER) {
-
-          power = Math.copySign(PIVOT_POWER, power);
-
+          double power = Constants.PivotConstants.PIVOT_KP * error;
+  
+          if (Math.abs(power) > PIVOT_POWER) {
+  
+            power = Math.copySign(PIVOT_POWER, power);
+  
+          }
+  
+          if (Math.abs(power) < 0.1) {
+  
+            power = Math.copySign(0.1, power);
+  
+          } else {
+  
+          pivotSubsystem.setPivot(power);
+         } 
+  
+        } else {
+  
+          pivotSubsystem.pivotStop();
+  
         }
-
-        if (Math.abs(power) < 0.1) {
-
-          power = Math.copySign(0.1, power);
-
-        }
-
-        else{
-
-        pivotSubsystem.setPivot(power);
-
-      } 
-
-      }
-      
-      else {
-
+      } else {
         pivotSubsystem.pivotStop();
-
       }
 
       SmartDashboard.putNumber("Pivot Error", error);
