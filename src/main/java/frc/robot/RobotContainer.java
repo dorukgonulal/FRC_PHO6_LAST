@@ -51,7 +51,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, 1);
     private final JoystickButton robotCentric = new JoystickButton(driver, 12);
-    private final JoystickButton slowButton = new JoystickButton(driver, 8); // Yeni eklenen boost butonu
+    private final JoystickButton slowButton = new JoystickButton(driver, 7); // Yeni eklenen boost butonu
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
