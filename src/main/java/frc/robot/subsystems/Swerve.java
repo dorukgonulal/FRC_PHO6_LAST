@@ -15,12 +15,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
+    private Field2d field;
     public Pigeon2 gyro;
 
     public Swerve() {
@@ -35,6 +37,9 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(1, Constants.Swerve.Mod3.constants)
         };
 
+        field = new Field2d();
+        //TODO: Set the actual pose
+        SmartDashboard.putData(field);
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
     }
 
@@ -116,13 +121,18 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
+        field.setRobotPose(getPose());
         swerveOdometry.update(getGyroYaw(), getModulePositions());
         SmartDashboard.putNumber("yaw", getGyroYaw().getDegrees());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);  
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Motor Current", mod.motorCurrent()); 
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Drive Torque Current", mod.driveTorqueCurrent()); 
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle Torque Current", mod.angleTorqueCurrent()); 
         }
+        
     }
 }
