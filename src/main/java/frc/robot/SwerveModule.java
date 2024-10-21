@@ -76,18 +76,6 @@ public class SwerveModule {
         mAngleMotor.setPosition(absolutePosition);
     }
 
-    public Double motorCurrent(){
-        return mDriveMotor.getMotorVoltage().getValue();
-    }
-
-    public Double driveTorqueCurrent(){
-        return mDriveMotor.getTorqueCurrent().getValue();
-    }
-
-    public Double angleTorqueCurrent(){
-        return mAngleMotor.getTorqueCurrent().getValue();
-    }
-
     public SwerveModuleState getState(){
         return new SwerveModuleState(
             Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference), 

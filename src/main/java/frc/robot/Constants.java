@@ -62,7 +62,7 @@ public final class Constants {
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
-        public static final double angleKP = 7.5; //steering ayarlama
+        public static final double angleKP = 8.5; //steering ayarlama
         public static final double angleKI = chosenModule.angleKI;
         public static final double angleKD = chosenModule.angleKD;
 
@@ -83,19 +83,19 @@ public final class Constants {
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; 
         /* Neutral Modes */
-        public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Coast;
+        public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Brake;
         public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 { //done
-            public static final int driveMotorID = 2;
-            public static final int angleMotorID = 1;
-            public static final int canCoderID = 9 ;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(360-30-4);//-113 //67  tamalandı
-            public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-        } 
+          public static final int driveMotorID = 2;
+          public static final int angleMotorID = 1;
+          public static final int canCoderID = 9 ;
+          public static final Rotation2d angleOffset = Rotation2d.fromDegrees(360-30-4);//-113 //67  tamalandı
+          public static final SwerveModuleConstants constants = 
+              new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
+      } 
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 { //done
@@ -118,7 +118,7 @@ public final class Constants {
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
 
-         
+        
         /* Back Right Module - Module 3 */
         public static final class Mod3 { //done
             public static final int driveMotorID = 7;
@@ -227,7 +227,7 @@ public final class Constants {
     
         public static final int k_DRIVER_CONTROLLER_PORT = 0;
         public static final int k_OPERATOR_CONTROLLER_PORT = 1;
-        public static final double k_CONTROLLER_DEADBAND = 0.05;
+        public static final double k_CONTROLLER_DEADBAND = 0.01;
     
       }
     
