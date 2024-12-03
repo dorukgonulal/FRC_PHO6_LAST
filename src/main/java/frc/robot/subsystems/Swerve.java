@@ -93,6 +93,10 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
 
+    public void resetGyro() {
+        gyro.setYaw(0); // Gyro yönünü sıfırlar
+    }    
+
     public SwerveModulePosition[] getModulePositions(){
         SwerveModulePosition[] positions = new SwerveModulePosition[mSwerveMods.length];
         for(SwerveModule mod : mSwerveMods){

@@ -63,12 +63,12 @@ public class RobotContainer {
     private final JoystickButton amprelease = new JoystickButton(operator, 6);
 
     private final JoystickButton trapShoot = new JoystickButton(operator, 1);
-    // private final JoystickButton elevatorDown = new JoystickButton(operator, 2);
-    // private final JoystickButton elevatorUp = new JoystickButton(operator, 8);
+    private final JoystickButton elevatorDown = new JoystickButton(operator, 2);
+    private final JoystickButton elevatorUp = new JoystickButton(operator, 8);
 
     // private final JoystickButton pivotUp = new JoystickButton(operator, 11);
     // private final JoystickButton pivotDown = new JoystickButton(operator, 12);
-
+    
     private final POVButton pivotzero = new POVButton(operator, 0);
     private final POVButton pivotamp = new POVButton(operator, 90);
     private final POVButton pivotintake = new POVButton(operator, 180);
@@ -87,7 +87,7 @@ public class RobotContainer {
                 s_Swerve, 
                 () -> -driverController.getRawAxis(translationAxis), 
                 () -> driverController.getRawAxis(strafeAxis), 
-                () -> -driverController.getRawAxis(rotationAxis), 
+                () -> driverController.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean(),
                 () -> slowButton.getAsBoolean()
             )
@@ -105,15 +105,18 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.whileTrue(new InstantCommand(() -> s_Swerve.setHeading(new Rotation2d(0))));
+        zeroGyro.whileTrue(new InstantCommand(() -> {
+            s_Swerve.resetGyro(); // Gyro'yu sıfırla
+            s_Swerve.setHeading(new Rotation2d(0)); // Odometry'yi sıfırla
+        }));        
         intakeon.whileTrue(new IntakeOnCommand(intake, feeder));
         intakeshootroll.whileTrue(new IntakeRollerSpeakerShootCommand(intake));
         intakeshootfeed.whileTrue(new IntakeFeedShootCommand(feeder));
         amprelease.whileTrue(new IntakeAmpShootCommand(intake, feeder));
 
         trapShoot.whileTrue(new IntakeTrapShootCommand(intake));
-        // elevatorDown.whileTrue(new ElevatorDownCommand(elevator));
-        // elevatorUp.whileTrue(new ElevatorUpCommand(elevator));
+        elevatorDown.whileTrue(new ElevatorDownCommand(elevator));
+        elevatorUp.whileTrue(new ElevatorUpCommand(elevator));
         // pivotUp.whileTrue(new PivotUpCommand(pivot));
         // pivotDown.whileTrue(new PivotDownCommand(pivot));
         //pivotPidIntake.whileTrue(new PivotControlCommand(pivot, PivotPosition.INTAKE));
