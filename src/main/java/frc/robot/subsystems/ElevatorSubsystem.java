@@ -98,8 +98,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void stallElevator(){
 
-    rightMotor.stopMotor();
-    leftMotor.stopMotor();
+    rightMotor.set(0.01);
+    leftMotor.set(0.01);
 
   }
 

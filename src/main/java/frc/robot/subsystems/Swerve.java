@@ -63,6 +63,7 @@ public class Swerve extends SubsystemBase {
                                     translation.getY(), 
                                     rotation)
             );
+<<<<<<< HEAD
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
@@ -97,6 +98,38 @@ public class Swerve extends SubsystemBase {
         gyro.setYaw(0); // Gyro yönünü sıfırlar
     }    
 
+=======
+
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for (SwerveModule mod : mSwerveMods) {
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        }
+    }
+
+    public void resetOdometry(Pose2d pose) {
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
+    }
+
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
+
+    public void resetPose(Pose2d pose) {
+        poseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
+    }
+
+    public void addVisionMeasurement(Pose2d visionPose, double timestamp) {
+        poseEstimator.addVisionMeasurement(visionPose, timestamp);
+    }
+
+    // eklendi, bu şekilde gyrodan her an veri çekebiliyoruz.
+    public void setHeading(Rotation2d heading) {
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+    }
+
+>>>>>>> f93d364270aa43385ad97f748a54d2d873acbafb
     public SwerveModulePosition[] getModulePositions(){
         SwerveModulePosition[] positions = new SwerveModulePosition[mSwerveMods.length];
         for(SwerveModule mod : mSwerveMods){
