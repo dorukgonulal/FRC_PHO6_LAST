@@ -1,14 +1,30 @@
 package frc.robot;
 
+import java.util.List;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.commands.*;
 import frc.robot.commands.MultiSubsystem.AutoLifterCommand;
 import frc.robot.commands.elevator.ElevatorDownCommand;
@@ -23,6 +39,7 @@ import frc.robot.commands.pivot.PivotUpCommand;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.ElevatorSubsystem.ElevatorPositions;
 import frc.robot.subsystems.PivotSubsystem.PivotPosition;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 
 /**
@@ -32,6 +49,9 @@ import frc.robot.subsystems.PivotSubsystem.PivotPosition;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+    private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
+
     /* Controllers */
     private final Joystick driver = new Joystick(Constants.IOConstants.k_DRIVER_CONTROLLER_PORT);
     private final Joystick operator = new Joystick(Constants.IOConstants.k_OPERATOR_CONTROLLER_PORT);
@@ -49,21 +69,21 @@ public class RobotContainer {
     private final int rotationAxis = 2;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, 1);
-    private final JoystickButton robotCentric = new JoystickButton(driver, 12);
-    private final JoystickButton slowButton = new JoystickButton(driver, 7); // Yeni eklenen boost butonu
+    private final JoystickButton zeroGyro = new JoystickButton(driver, 1); //Square
+    private final JoystickButton robotCentric = new JoystickButton(driver, 12); //R3
+    private final JoystickButton slowButton = new JoystickButton(driver, 7); // Yeni eklenen boost butonu L2
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
 
     
-    private final JoystickButton intakeon = new JoystickButton(operator, 4);
-    private final JoystickButton intakeshootroll = new JoystickButton(operator, 3);
-    private final JoystickButton intakeshootfeed = new JoystickButton(operator, 5);
-    private final JoystickButton amprelease = new JoystickButton(operator, 6);
+    private final JoystickButton intakeon = new JoystickButton(operator, 4); //Triangle
+    private final JoystickButton intakeshootroll = new JoystickButton(operator, 3); //Circle
+    private final JoystickButton intakeshootfeed = new JoystickButton(operator, 5); //L1
+    private final JoystickButton amprelease = new JoystickButton(operator, 6); //R1
 
-    private final JoystickButton trapShoot = new JoystickButton(operator, 1);
-    private final JoystickButton elevatorDown = new JoystickButton(operator, 2);
+    private final JoystickButton trapShoot = new JoystickButton(operator, 1); // Square
+    private final JoystickButton elevatorDown = new JoystickButton(operator, 2); // 
     private final JoystickButton elevatorUp = new JoystickButton(operator, 8);
 
     // private final JoystickButton pivotUp = new JoystickButton(operator, 11);
@@ -82,6 +102,10 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+
+        autoChooser.setDefaultOption("testAutonomous", s_Swerve.followPathCommand("Example Path"));
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -132,7 +156,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return null;
+        return autoChooser.getSelected();
     }
 }
