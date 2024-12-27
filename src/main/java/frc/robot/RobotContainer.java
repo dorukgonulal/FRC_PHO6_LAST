@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -50,7 +51,7 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
  */
 public class RobotContainer {
 
-    private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
+    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     /* Controllers */
     private final Joystick driver = new Joystick(Constants.IOConstants.k_DRIVER_CONTROLLER_PORT);
@@ -75,15 +76,20 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final IntakeSubsystem intake = new IntakeSubsystem();
+    private final FeederSubsystem feeder = new FeederSubsystem();
+    private final PivotSubsystem pivot = new PivotSubsystem();
+    private final ElevatorSubsystem elevator = new ElevatorSubsystem();
+
 
     
-    private final JoystickButton intakeon = new JoystickButton(operator, 4); //Triangle
-    private final JoystickButton intakeshootroll = new JoystickButton(operator, 3); //Circle
-    private final JoystickButton intakeshootfeed = new JoystickButton(operator, 5); //L1
-    private final JoystickButton amprelease = new JoystickButton(operator, 6); //R1
+    private final JoystickButton intakeon = new JoystickButton(operator, 4);
+    private final JoystickButton intakeshootroll = new JoystickButton(operator, 3);
+    private final JoystickButton intakeshootfeed = new JoystickButton(operator, 5); 
+    private final JoystickButton amprelease = new JoystickButton(operator, 6); 
 
-    private final JoystickButton trapShoot = new JoystickButton(operator, 1); // Square
-    private final JoystickButton elevatorDown = new JoystickButton(operator, 2); // 
+    private final JoystickButton trapShoot = new JoystickButton(operator, 1);
+    private final JoystickButton elevatorDown = new JoystickButton(operator, 2); 
     private final JoystickButton elevatorUp = new JoystickButton(operator, 8);
 
     // private final JoystickButton pivotUp = new JoystickButton(operator, 11);
@@ -94,16 +100,13 @@ public class RobotContainer {
     private final POVButton pivotintake = new POVButton(operator, 180);
 
 
-    /* Subsystems */ 
-    private final IntakeSubsystem intake = new IntakeSubsystem();
-    private final FeederSubsystem feeder = new FeederSubsystem();
-    private final PivotSubsystem pivot = new PivotSubsystem();
-    private final ElevatorSubsystem elevator = new ElevatorSubsystem();
-
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
 
-        autoChooser.setDefaultOption("testAutonomous", s_Swerve.followPathCommand("Example Path"));
+        autoChooser.setDefaultOption("OTONOM_BABA", //
+        new followPathCommand("Example Path", s_Swerve, false, false) //
+        );
+        
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
         s_Swerve.setDefaultCommand(
@@ -116,6 +119,7 @@ public class RobotContainer {
                 () -> slowButton.getAsBoolean()
             )
         );
+        // pivot.setDefaultCommand(pivotAdjust);
 
         // Configure the button bindings
         configureButtonBindings();

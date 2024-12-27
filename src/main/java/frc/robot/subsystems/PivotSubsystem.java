@@ -20,7 +20,7 @@ public class PivotSubsystem extends SubsystemBase {
   private CANSparkMax PivotMotor = new CANSparkMax(Constants.Pivot.PIVOT_MOTOR_ID, MotorType.kBrushless);
   public RelativeEncoder pivotEncoder = PivotMotor.getEncoder(); 
 
-  private final PIDController pivotController;
+  public final PIDController pivotController;
 
   private double PIDOutput = 0;
 
@@ -83,9 +83,6 @@ public class PivotSubsystem extends SubsystemBase {
     pivotEncoder.setPosition(0);
 
   }
-
-  
-
 
   @Override
   public void periodic() {

@@ -64,18 +64,6 @@ public class Swerve extends SubsystemBase {
             getModulePositions(), 
             new Pose2d()
         );
-
-        AutoBuilder.configureHolonomic(this::getPose, this::resetPose, this::getRobotRelativeSpeeds,
-                this::driveRobotRelative,
-                new HolonomicPathFollowerConfig(
-                        new PIDConstants(Constants.AutoConstants.kPXController, 0.0, 0.0),
-                        new PIDConstants(Constants.AutoConstants.kPThetaController, 0.0, 0.0),
-                        Constants.Swerve.maxSpeed,
-                        Math.hypot(Constants.Swerve.trackWidth / 2.0, Constants.Swerve.wheelBase / 2.0),
-                        new ReplanningConfig()),
-                        isRed(), 
-                        this
-                    );
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -100,6 +88,10 @@ public class Swerve extends SubsystemBase {
         }
     }
     
+    // ASLAN-METE TM*
+    public void setPose(Pose2d pose) {
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
+    }
 
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
@@ -154,13 +146,7 @@ public class Swerve extends SubsystemBase {
 
 
 
-    // AUTONOMOUS //
 
-    public Command followPathCommand(String pathName){
-        PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
-
-        return AutoBuilder.followPath(path);
-    }
 
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
@@ -183,10 +169,10 @@ public class Swerve extends SubsystemBase {
 
         PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
         if (isRed().getAsBoolean()) {
-            resetPose(GeometryUtil.flipFieldPose(path.getPreviewStartingHolonomicPose()));
+            setPose(GeometryUtil.flipFieldPose(path.getPreviewStartingHolonomicPose()));
         }
         else {
-            resetPose(path.getPreviewStartingHolonomicPose());
+            setPose(path.getPreviewStartingHolonomicPose());
         }
     }
 

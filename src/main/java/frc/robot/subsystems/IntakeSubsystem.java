@@ -46,6 +46,12 @@ public class IntakeSubsystem extends SubsystemBase {
     return RollerTop.getAppliedOutput();
   }
 
+  // public void setShooterSpeed(double targetRPM) {
+  //   double power = targetRPM / Constants.ShooterSpeedAdjustConstants.MAX_RPM; // Normalize RPM to power (range: 0 to 1)
+  //   power = Math.min(1.0, Math.max(-1.0, power)); // Clamp power to valid range
+  //   RollerTop.set(power/2);
+  //   RollerBottom.set(power/2);
+  // }
 
   public void stopIntake(){
     RollerTop.stopMotor();
